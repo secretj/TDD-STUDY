@@ -26,7 +26,13 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'com.google.guava:guava:31.1-jre'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+	testImplementation ('io.rest-assured:rest-assured:5.2.0') {
+		exclude group: 'org.apache.groovy.groovy', module: 'groovy-xml'
+	}
 }
 
 tasks.named('test') {
