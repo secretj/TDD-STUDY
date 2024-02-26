@@ -3,19 +3,17 @@ package com.example.productorderservice.product;
 import com.example.productorderservice.AddProductRequest;
 import com.example.productorderservice.ApiTest;
 import com.example.productorderservice.DiscountPolicy;
-import org.springframework.beans.factory.annotation.Autowired;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
-class ProductApiTest extends ApiTest
+class ProductSteps extends ApiTest
 {
 
     @Test
