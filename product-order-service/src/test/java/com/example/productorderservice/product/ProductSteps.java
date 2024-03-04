@@ -1,34 +1,13 @@
 package com.example.productorderservice.product;
 
-import com.example.productorderservice.AddProductRequest;
-import com.example.productorderservice.ApiTest;
-import com.example.productorderservice.DiscountPolicy;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
-
-class ProductSteps extends ApiTest
-{
-
-    @Test
-    void 상품등록() {
-        final var request = 상품등록요청_생성();
-
-        // API 요청
-        final var response = 상품등록요청(request);
-
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
-
-    }
-
-    public static ExtractableResponse<Response> 상품등록요청(final AddProductRequest request) {
-        return  RestAssured.given().log().all()
+public class ProductSteps {
+    public static ExtractableResponse<Response> 상품요청(AddProductRequest request) {
+        return RestAssured.given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
@@ -37,14 +16,37 @@ class ProductSteps extends ApiTest
                 .log().all().extract();
     }
 
-    public static AddProductRequest 상품등록요청_생성() {
+    public static AddProductRequest 상품등록_요청() {
         final String name = "상품명";
         final int price = 1000;
-        final DiscountPolicy discountPolicy = DiscountPolicy.NONE;
-        final AddProductRequest request = new AddProductRequest(name, price, discountPolicy);
+        final DiscountPolicy disCountPolicy = DiscountPolicy.NONE;
+        final AddProductRequest request = new AddProductRequest(name, price, disCountPolicy.NONE);
         return request;
     }
 
+    final
 
+    public static ExtractableResponse<Response> 상품조회_요청(Long productId) {
+        return RestAssured.given().log().all()
+                .when()
+                .get("/products/{productId}" , productId)
+                .then()
+                .log().all()
+                .extract();
+    }
+
+    public static UpdateProductRequest 상품수정_요청_생성() {
+        return new UpdateProductRequest();
+    }
+
+    public static ExtractableResponse<Response> 상품수정_요청(final Long productId) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(상품수정_요청_생성())
+                .when()
+                .patch("/products/{productId}", productId)
+                .then().log().all()
+                .extract();
+    }
 }
 
